@@ -1,0 +1,476 @@
+{
+  "nodes": [
+    {
+      "group": "Files", 
+      "name": ".gitignore", 
+      "id": 0
+    }, 
+    {
+      "group": "Files", 
+      "name": ".rvmrc", 
+      "id": 1
+    }, 
+    {
+      "group": "Files", 
+      "name": "LICENSE_GPL", 
+      "id": 2
+    }, 
+    {
+      "group": "Files", 
+      "name": "LICENSE_MIT", 
+      "id": 3
+    }, 
+    {
+      "group": "Files", 
+      "name": "README.mkd", 
+      "id": 4
+    }, 
+    {
+      "group": "Files", 
+      "name": "Rakefile", 
+      "id": 5
+    }, 
+    {
+      "group": "Files", 
+      "name": "TODO", 
+      "id": 6
+    }, 
+    {
+      "group": "Files", 
+      "name": "bin\\ti", 
+      "id": 7
+    }, 
+    {
+      "group": "Files", 
+      "name": "bin\\ticgitweb", 
+      "id": 8
+    }, 
+    {
+      "group": "Files", 
+      "name": "examples\\post-commit", 
+      "id": 9
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng.rb", 
+      "id": 10
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\base.rb", 
+      "id": 11
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\cli.rb", 
+      "id": 12
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command.rb", 
+      "id": 13
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\assign.rb", 
+      "id": 14
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\checkout.rb", 
+      "id": 15
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\comment.rb", 
+      "id": 16
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\list.rb", 
+      "id": 17
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\milestone.rb", 
+      "id": 18
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\new.rb", 
+      "id": 19
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\points.rb", 
+      "id": 20
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\recent.rb", 
+      "id": 21
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\show.rb", 
+      "id": 22
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\state.rb", 
+      "id": 23
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\sync.rb", 
+      "id": 24
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\command\\tag.rb", 
+      "id": 25
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\comment.rb", 
+      "id": 26
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\ticket.rb", 
+      "id": 27
+    }, 
+    {
+      "group": "Files", 
+      "name": "lib\\ticgit-ng\\version.rb", 
+      "id": 28
+    }, 
+    {
+      "group": "Files", 
+      "name": "note\\IMPLEMENT", 
+      "id": 29
+    }, 
+    {
+      "group": "Files", 
+      "name": "note\\NOTES", 
+      "id": 30
+    }, 
+    {
+      "group": "Files", 
+      "name": "note\\OUTPUT", 
+      "id": 31
+    }, 
+    {
+      "group": "Files", 
+      "name": "note\\TODO", 
+      "id": 32
+    }, 
+    {
+      "group": "Files", 
+      "name": "spec\\base_spec.rb", 
+      "id": 33
+    }, 
+    {
+      "group": "Files", 
+      "name": "spec\\cli_spec.rb", 
+      "id": 34
+    }, 
+    {
+      "group": "Files", 
+      "name": "spec\\merging_spec.rb", 
+      "id": 35
+    }, 
+    {
+      "group": "Files", 
+      "name": "spec\\spec_helper.rb", 
+      "id": 36
+    }, 
+    {
+      "group": "Files", 
+      "name": "spec\\ticgit_spec.rb", 
+      "id": 37
+    }, 
+    {
+      "group": "Files", 
+      "name": "ticgit-ng.gemspec", 
+      "id": 38
+    }, 
+    {
+      "group": "Directories", 
+      "name": "spec", 
+      "id": 39
+    }, 
+    {
+      "group": "Directories", 
+      "name": "note", 
+      "id": 40
+    }, 
+    {
+      "group": "Directories", 
+      "name": "lib\\ticgit-ng\\command", 
+      "id": 41
+    }, 
+    {
+      "group": "Directories", 
+      "name": "lib\\ticgit-ng", 
+      "id": 42
+    }, 
+    {
+      "group": "Directories", 
+      "name": "lib", 
+      "id": 43
+    }, 
+    {
+      "group": "Directories", 
+      "name": "examples", 
+      "id": 44
+    }, 
+    {
+      "group": "Directories", 
+      "name": "bin", 
+      "id": 45
+    }, 
+    {
+      "group": "Directories", 
+      "name": ".", 
+      "id": 46
+    }
+  ], 
+  "links": [
+    {
+      "source": 0, 
+      "target": 46, 
+      "value": 1
+    }, 
+    {
+      "source": 1, 
+      "target": 46, 
+      "value": 1
+    }, 
+    {
+      "source": 2, 
+      "target": 46, 
+      "value": 1
+    }, 
+    {
+      "source": 3, 
+      "target": 46, 
+      "value": 1
+    }, 
+    {
+      "source": 4, 
+      "target": 46, 
+      "value": 1
+    }, 
+    {
+      "source": 5, 
+      "target": 46, 
+      "value": 1
+    }, 
+    {
+      "source": 6, 
+      "target": 46, 
+      "value": 1
+    }, 
+    {
+      "source": 7, 
+      "target": 45, 
+      "value": 1
+    }, 
+    {
+      "source": 8, 
+      "target": 45, 
+      "value": 1
+    }, 
+    {
+      "source": 9, 
+      "target": 44, 
+      "value": 1
+    }, 
+    {
+      "source": 10, 
+      "target": 43, 
+      "value": 1
+    }, 
+    {
+      "source": 11, 
+      "target": 42, 
+      "value": 1
+    }, 
+    {
+      "source": 12, 
+      "target": 42, 
+      "value": 1
+    }, 
+    {
+      "source": 13, 
+      "target": 42, 
+      "value": 1
+    }, 
+    {
+      "source": 14, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 15, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 16, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 17, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 18, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 19, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 20, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 21, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 22, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 23, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 24, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 25, 
+      "target": 41, 
+      "value": 1
+    }, 
+    {
+      "source": 26, 
+      "target": 42, 
+      "value": 1
+    }, 
+    {
+      "source": 27, 
+      "target": 42, 
+      "value": 1
+    }, 
+    {
+      "source": 28, 
+      "target": 42, 
+      "value": 1
+    }, 
+    {
+      "source": 29, 
+      "target": 40, 
+      "value": 1
+    }, 
+    {
+      "source": 30, 
+      "target": 40, 
+      "value": 1
+    }, 
+    {
+      "source": 31, 
+      "target": 40, 
+      "value": 1
+    }, 
+    {
+      "source": 32, 
+      "target": 40, 
+      "value": 1
+    }, 
+    {
+      "source": 33, 
+      "target": 39, 
+      "value": 1
+    }, 
+    {
+      "source": 34, 
+      "target": 39, 
+      "value": 1
+    }, 
+    {
+      "source": 35, 
+      "target": 39, 
+      "value": 1
+    }, 
+    {
+      "source": 36, 
+      "target": 39, 
+      "value": 1
+    }, 
+    {
+      "source": 37, 
+      "target": 39, 
+      "value": 1
+    }, 
+    {
+      "source": 38, 
+      "target": 46, 
+      "value": 1
+    }, 
+    {
+      "source": 39, 
+      "target": 46, 
+      "value": 2
+    }, 
+    {
+      "source": 40, 
+      "target": 46, 
+      "value": 2
+    }, 
+    {
+      "source": 41, 
+      "target": 42, 
+      "value": 2
+    }, 
+    {
+      "source": 42, 
+      "target": 43, 
+      "value": 2
+    }, 
+    {
+      "source": 43, 
+      "target": 46, 
+      "value": 2
+    }, 
+    {
+      "source": 44, 
+      "target": 46, 
+      "value": 2
+    }, 
+    {
+      "source": 45, 
+      "target": 46, 
+      "value": 2
+    }, 
+    {
+      "source": 46, 
+      "target": 46, 
+      "value": 2
+    }
+  ]
+}
