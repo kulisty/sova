@@ -2,6 +2,7 @@ import argparse
 import time
 import io
 import os
+import sys
 import repository
 import model
 import files
@@ -24,6 +25,7 @@ def run():
     repo = repository.Repository(args.path, args.rev_from, args.rev_to)
     repo.connect()
     files.output(repo, 'files')
+    sys.exit("SOVA: Software warehouse successfully generated")
  
 if __name__ == '__main__':
     run()

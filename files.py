@@ -78,23 +78,20 @@ def output(repository, file):
     #
     graph = model.Graph([],[])
     for f in files:
-        graph.nodes.append(model.Node(f, 'Files', idx.index(f)))
+        graph.nodes.append(model.Node(f, 'Files', idx.index(f), repository.address(f)))
     for m in children:
-        graph.nodes.append(model.Node(m, 'Directories', idx.index(m)))
+        graph.nodes.append(model.Node(m, 'Directories', idx.index(m), repository.address(m)))
     for (f, b, m) in paths:
         graph.links.append(model.Link( idx.index(f), idx.index(m), 1 ))
     for (c, p) in parents:
         graph.links.append(model.Link( idx.index(c), idx.index(p), 2))
     #
     # write json
-    with open(file+'.json', 'w') as out_json:
+    with open(file+'.json', 'wb+') as out_json:
         json.dump(graph, out_json, default=model.default, indent=2)
-    out_json.close()
-    #  
+    # 
     # write csv
     out_csv = csv.writer(open(file+'.csv', 'wb+'), delimiter=';')
-    out_csv.writerow(['name','group','id'])
-    for i in range(len(files)):
-        out_csv.writerow([files[i],'Files',i])
-    for j in range(len(children)):
-        out_csv.writerow([children[j],'Directories',j+i])
+    out_csv.writerow(['name', 'group', 'id', 'url'])
+    for i in range(len(graph.nodes)):
+        out_csv.writerow([graph.nodes[i].name, graph.nodes[i].group, graph.nodes[i].id, graph.nodes[i].url])

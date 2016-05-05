@@ -1,12 +1,16 @@
 class Node(object):
 
-    def __init__(self, name='', group='', id=''):
+    def __init__(self, name='', group='', id='', url=''):
         self.name = name
         self.group = group
         self.id = id
+        self.url = url
 
     def _asdict(self):
         return self.__dict__
+
+    def __dir__(self):
+            return ['name', 'group', 'id', 'url']
 
 class Link(object):
 
@@ -17,6 +21,9 @@ class Link(object):
 
     def _asdict(self):
         return self.__dict__
+
+    def __dir__(self):
+            return ['source', 'target', 'value']
 
 class Graph(object):
 

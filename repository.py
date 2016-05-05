@@ -1,6 +1,7 @@
 import os
 import git
 import model
+import sys
 
 class Repository:
 
@@ -9,13 +10,22 @@ class Repository:
         self.revision_from = revision_from
         self.revision_to = revision_to
         self.repository = None
+        self.origin = None
 
     def connect(self):
         try:
             if self.repository == None:
                 self.repository = git.Repo(self.path)
+                self.origin = self.repository.remotes.origin.url.replace(".git","")
+                print("SOVA: Connected to <" + self.path + "> originated from <" + self.origin + ">")
         except git.exc.NoSuchPathError:
-            self.repository = None
+            sys.exit("SOVA: Repository does not exist, aborting")
+
+    def address(self, s):
+        if s == ".":
+            return self.origin.replace("/","\\")
+        else:
+            return (self.origin + "/blob/master/" + s).replace("/","\\")
 
     def retrieve_files(self, commit='HEAD'):
         listing = self.repository.git.ls_tree('-r', '--name-only', commit).split('\n')
