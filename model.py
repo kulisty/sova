@@ -5,6 +5,11 @@ class Node(object):
         self.group = group
         self.id = id
         self.url = url
+        # on-screen display - circle
+        self.cx = 0.0
+        self.cy = 0.0
+        self.r = 0.0
+        self.style = ""
 
     def _asdict(self):
         return self.__dict__
@@ -18,6 +23,12 @@ class Link(object):
         self.source = source
         self.target = target
         self.value = value
+        # on-screen display - line
+        self.x1 = 0.0
+        self.y1 = 0.0
+        self.x2 = 0.0
+        self.y2 = 0.0
+        self.style = ""
 
     def _asdict(self):
         return self.__dict__

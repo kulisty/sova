@@ -21,11 +21,14 @@ class Repository:
         except git.exc.NoSuchPathError:
             sys.exit("SOVA: Repository does not exist, aborting")
 
-    def address(self, s):
+    def address_files(self, s):
         if s == ".":
             return self.origin.replace("/","\\")
         else:
             return (self.origin + "/blob/master/" + s).replace("/","\\")
+
+    def address_commits(self, s):
+        return (self.origin + "/commit/" + s).replace("/","\\")
 
     def retrieve_files(self, commit='HEAD'):
         listing = self.repository.git.ls_tree('-r', '--name-only', commit).split('\n')
@@ -41,6 +44,10 @@ class Repository:
             # commit.author.email
             # commit.parents
             commit
+            # for commit in self.repository.iter_commits('%s..%s' %(self.revision_from, self.revision_to))
             for commit in self.repository.iter_commits()
         ]
-        return commits
+        #family = ((commit.hexsha, parent.hexsha) for commit in commits for parent in commit.parents)
+        #family = {(commit.hexsha, parent.hexsha) for commit in commits for parent in commit.parents}
+        family = [(commit.hexsha, parent.hexsha) for commit in commits for parent in commit.parents]
+        return family

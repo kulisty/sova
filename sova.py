@@ -6,6 +6,7 @@ import sys
 import repository
 import model
 import files
+import commits
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
@@ -25,7 +26,8 @@ def run():
     repo = repository.Repository(args.path, args.rev_from, args.rev_to)
     repo.connect()
     files.output(repo, 'files')
+    commits.output(repo, 'commits')
     sys.exit("SOVA: Software warehouse successfully generated")
- 
+
 if __name__ == '__main__':
     run()

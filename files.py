@@ -23,14 +23,14 @@ def findlongest(s, strings, empty = [os.curdir]):
         longest = empty
     return longest
 
-# Convert a list of strings into a normalized os path 
+# Convert a list of strings into a normalized os path
 def topath(strings):
     result = os.curdir + os.sep
     for i in range(len(strings)):
         p = strings[i]
         result = result + os.sep + p
     result = os.path.normpath(result)
-    return result 
+    return result
 
 def emptypath(s):
     if s == u'':
@@ -41,13 +41,6 @@ def emptypath(s):
 def retrieve(repository):
     f = repository.retrieve_files()
     return f
-
-def build(repository):
-    f = repository.retrieve_files()
-    g = model.Graph([],[])
-    for i in range(len(f)):
-        g.nodes.append(model.Node(f[i], i, i))
-    return g
 
 def output(repository, file):
     files = repository.retrieve_files()
@@ -78,9 +71,9 @@ def output(repository, file):
     #
     graph = model.Graph([],[])
     for f in files:
-        graph.nodes.append(model.Node(f, 'Files', idx.index(f), repository.address(f)))
+        graph.nodes.append(model.Node(f, 'Files', idx.index(f), repository.address_files(f)))
     for m in children:
-        graph.nodes.append(model.Node(m, 'Directories', idx.index(m), repository.address(m)))
+        graph.nodes.append(model.Node(m, 'Directories', idx.index(m), repository.address_files(m)))
     for (f, b, m) in paths:
         graph.links.append(model.Link( idx.index(f), idx.index(m), 1 ))
     for (c, p) in parents:
@@ -89,7 +82,7 @@ def output(repository, file):
     # write json
     with open(file+'.json', 'wb+') as out_json:
         json.dump(graph, out_json, default=model.default, indent=2)
-    # 
+    #
     # write csv
     out_csv = csv.writer(open(file+'.csv', 'wb+'), delimiter=';')
     out_csv.writerow(['name', 'group', 'id', 'url'])
