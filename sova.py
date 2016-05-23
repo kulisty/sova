@@ -7,6 +7,7 @@ import repository
 import model
 import files
 import commits
+import functions
 
 def parse_arguments():
     try:
@@ -31,8 +32,9 @@ def run():
     # repo = repository.Repository(args.path, args.rev, args.rev_from, args.rev_to)
     repo = repository.Repository(args.path, args.rev)
     repo.connect()
-    files.output(repo, 'files')
-    commits.output(repo, 'commits')
+    files.output(repo, './data/files')
+    commits.output(repo, './data/commits')
+    functions.output(repo, './data/functions')
     sys.exit("SOVA: Software warehouse successfully generated")
 
 if __name__ == '__main__':
