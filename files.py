@@ -69,7 +69,11 @@ def output(repository, file):
     ]
     idx = files+children
     #
-    graph = model.Graph([],[])
+    graph = model.Graph(
+        model.Project(repository.path, repository.origin, repository.revision),
+        [],[]
+    )
+    #
     for f in files:
         graph.nodes.append(model.Node(f, 'Files', idx.index(f), repository.address_files(f)))
     for m in children:

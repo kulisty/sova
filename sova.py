@@ -9,21 +9,27 @@ import files
 import commits
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(
-        description="Build architecture warehouse for a software project",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
-    parser.add_argument(
-        'path', help="path to repository")
-    parser.add_argument(
-        '-rev_from', help="build from revision REV_FROM", default='HEAD~32')
-    parser.add_argument(
-        '-rev_to', help="build to revision REV_TO", default='HEAD')
-    return parser.parse_args()
+    try:
+        parser = argparse.ArgumentParser(
+            description="Build architecture warehouse for a software project",
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter
+        )
+        parser.add_argument(
+            'path', help="path to repository")
+        parser.add_argument(
+            '-rev', help="build for revision REV", default='HEAD')
+        # parser.add_argument(
+        #     '-rev_from', help="build from revision REV_FROM", default='HEAD~8')
+        # parser.add_argument(
+        #     '-rev_to', help="build to revision REV_TO", default='HEAD')
+        return parser.parse_args()
+    except SystemExit:
+        sys.exit("SOVA: Error parsing arguments, aborting")
 
 def run():
     args = parse_arguments()
-    repo = repository.Repository(args.path, args.rev_from, args.rev_to)
+    # repo = repository.Repository(args.path, args.rev, args.rev_from, args.rev_to)
+    repo = repository.Repository(args.path, args.rev)
     repo.connect()
     files.output(repo, 'files')
     commits.output(repo, 'commits')

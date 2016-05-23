@@ -10,11 +10,15 @@ def retrieve(repository):
     return f
 
 def output(repository, file):
-    family = repository.retrieve_commits()
-    commits = {c for (c,p) in family} | {p for (c,p) in family}
+    (commits, family) = repository.retrieve_commits()
+    # commits = {c for (c,p) in family} | {p for (c,p) in family}
     idx = list(commits)
     #
-    graph = model.Graph([],[])
+    graph = model.Graph(
+        model.Project(repository.path, repository.origin, repository.revision),
+        [],[]
+    )
+    #
     for c in commits:
         graph.nodes.append(model.Node(c, 'Commits', idx.index(c), repository.address_commits(c)))
     for (c, p) in family:
