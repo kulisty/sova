@@ -10,6 +10,24 @@
       "style": "", 
       "fixed": false, 
       "group": "Commits", 
+      "name": "f25236316c03c29f6ffa84b46c14f57be54bc8c5", 
+      "url": "https:\\\\github.com\\kulisty\\sova\\commit\\f25236316c03c29f6ffa84b46c14f57be54bc8c5", 
+      "px": 0.0, 
+      "py": 0.0, 
+      "cy": 0.0, 
+      "complexity": 0.0, 
+      "cx": 0.0, 
+      "y": 0.0, 
+      "x": 0.0, 
+      "r": 0.0, 
+      "quality": 0.0, 
+      "id": 0
+    }, 
+    {
+      "index": 0, 
+      "style": "", 
+      "fixed": false, 
+      "group": "Commits", 
       "name": "1b4d5db297a13868a9625bd73ea7bf5aec50a46b", 
       "url": "https:\\\\github.com\\kulisty\\sova\\commit\\1b4d5db297a13868a9625bd73ea7bf5aec50a46b", 
       "px": 0.0, 
@@ -21,7 +39,7 @@
       "x": 0.0, 
       "r": 0.0, 
       "quality": 0.0, 
-      "id": 0
+      "id": 1
     }, 
     {
       "index": 0, 
@@ -39,7 +57,7 @@
       "x": 0.0, 
       "r": 0.0, 
       "quality": 0.0, 
-      "id": 1
+      "id": 2
     }, 
     {
       "index": 0, 
@@ -57,7 +75,7 @@
       "x": 0.0, 
       "r": 0.0, 
       "quality": 0.0, 
-      "id": 2
+      "id": 3
     }, 
     {
       "index": 0, 
@@ -75,7 +93,7 @@
       "x": 0.0, 
       "r": 0.0, 
       "quality": 0.0, 
-      "id": 3
+      "id": 4
     }, 
     {
       "index": 0, 
@@ -93,7 +111,7 @@
       "x": 0.0, 
       "r": 0.0, 
       "quality": 0.0, 
-      "id": 4
+      "id": 5
     }, 
     {
       "index": 0, 
@@ -111,7 +129,7 @@
       "x": 0.0, 
       "r": 0.0, 
       "quality": 0.0, 
-      "id": 5
+      "id": 6
     }, 
     {
       "index": 0, 
@@ -129,7 +147,7 @@
       "x": 0.0, 
       "r": 0.0, 
       "quality": 0.0, 
-      "id": 6
+      "id": 7
     }
   ], 
   "links": [
@@ -190,6 +208,16 @@
       "value": 1, 
       "x2": 0.0, 
       "source": 5, 
+      "y1": 0.0, 
+      "x1": 0.0
+    }, 
+    {
+      "style": "", 
+      "y2": 0.0, 
+      "target": 7, 
+      "value": 1, 
+      "x2": 0.0, 
+      "source": 6, 
       "y1": 0.0, 
       "x1": 0.0
     }

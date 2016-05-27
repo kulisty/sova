@@ -37,7 +37,7 @@ class Node(object):
         return self.__dict__
 
     def __dir__(self):
-            return ['name', 'group', 'id', 'url']
+            return ['name', 'group', 'id', 'url', 'complexity', 'quality']
 
 class Link(object):
 
