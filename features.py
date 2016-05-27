@@ -16,11 +16,11 @@ def output(repository, file):
         for (n,f,l,ff) in features
     }
     files = {
-        (f,repository.address_files(f),ff[0])
+        (f,repository.address_files(f))
         for (n,f,l,ff) in features
     }
     ni = list(a for (n,a,c) in names)
-    nf = list(a for (f,a,c) in files)
+    nf = list(a for (f,a) in files)
     idx = ni+nf+['.']
     #print(idx)
     #
@@ -30,13 +30,15 @@ def output(repository, file):
     )
     #
     for (n,a,c) in names:
-        graph.nodes.append(model.Node(name = n, group = 'Functions', id = idx.index(a), url = a, complexity = 1+float(c)/15 ))
-    for (f,a,c) in files:
-        graph.nodes.append(model.Node(f, 'Files', idx.index(a), a))
-    graph.nodes.append(model.Node('.', 'Files', idx.index('.'), repository.origin))
+        graph.nodes.append( model.Node(name = n, group = 'Functions', id = idx.index(a), url = a, complexity = 5+float(c)/3) )
+    for (f,a) in files:
+        graph.nodes.append( model.Node(name = f, group = 'Files', id = idx.index(a), url = a, complexity = 4.0))
+    #
+    graph.nodes.append( model.Node(name = '.', group = 'Files', id = idx.index('.'), url = repository.origin, complexity = 6.0) )
+    #
     for (n,f,l,ff) in features:
         graph.links.append(model.Link( idx.index(repository.address_files(f)), idx.index(repository.address_functions(f,n,l)), 1 ))
-    for (f,a,c) in files:
+    for (f,a) in files:
         graph.links.append(model.Link( idx.index(a), idx.index('.'), 1 ))
     #for (c, p) in parents:
     #    graph.links.append(model.Link( idx.index(c), idx.index(p), 2))
