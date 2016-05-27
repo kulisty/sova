@@ -14,11 +14,13 @@ class Project(object):
 
 class Node(object):
 
-    def __init__(self, name='', group='', id='', url=''):
+    def __init__(self, name='', group='', id='', url='', complexity=0.0, quality=0.0):
         self.name = name
         self.group = group
         self.id = id
         self.url = url
+        self.complexity = complexity
+        self.quality = quality
         # on-screen display - circle
         self.cx = 0.0
         self.cy = 0.0

@@ -8,6 +8,7 @@ import model
 import files
 import commits
 import functions
+import features
 
 def parse_arguments():
     try:
@@ -35,6 +36,7 @@ def run():
     files.output(repo, './data/files')
     commits.output(repo, './data/commits')
     functions.output(repo, './data/functions')
+    features.output(repo, './data/features')
     sys.exit("SOVA: Software warehouse successfully generated")
 
 if __name__ == '__main__':

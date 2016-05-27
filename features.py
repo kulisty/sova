@@ -6,18 +6,18 @@ import os
 import itertools
 
 def retrieve(repository):
-    f = repository.retrieve_functions()
+    f = repository.retrieve_features()
     return f
 
 def output(repository, file):
-    functions = repository.retrieve_functions()
+    features = repository.retrieve_features()
     names = {
         (n,repository.address_functions(f,n,l))
-        for (n,f,l) in functions
+        for (n,f,l,ff) in features
     }
     files = {
         (f,repository.address_files(f))
-        for (n,f,l) in functions
+        for (n,f,l,ff) in features
     }
     ni = list(a for (n,a) in names)
     nf = list(a for (f,a) in files)
@@ -34,8 +34,8 @@ def output(repository, file):
     for (f,a) in files:
         graph.nodes.append(model.Node(f, 'Files', idx.index(a), a))
     graph.nodes.append(model.Node('.', 'Files', idx.index('.'), repository.origin))
-    for (n,f,l) in functions:
-        graph.links.append(model.Link( idx.index(repository.address_files(f)), idx.index(repository.address_functions(f,n,l)), 1 ))
+    for (n,f,l,ff) in features:
+        graph.links.append(model.Link( idx.index(repository.address_files(f)), idx.index(repository.address_functions(f,n,l)), ff[0] ))
     for (f,a) in files:
         graph.links.append(model.Link( idx.index(a), idx.index('.'), 1 ))
     #for (c, p) in parents:
