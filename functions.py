@@ -6,10 +6,6 @@ import os
 import itertools
 
 def retrieve(repository):
-    f = repository.retrieve_functions()
-    return f
-
-def output(repository, file):
     functions = repository.retrieve_functions()
     names = {
         (n,repository.address_functions(f,n,l))
@@ -25,21 +21,25 @@ def output(repository, file):
     #print(idx)
     #
     graph = model.Graph(
-        model.Project(repository.path, repository.origin, repository.revision),
+        model.Project(repository.origin, repository.commit, repository.owner, repository.name),
         [],[]
     )
     #
     for (n,a) in names:
-        graph.nodes.append(model.Node(n, 'Functions', idx.index(a), a))
+        graph.nodes.append(model.Node(n, 'Function', idx.index(a), a))
     for (f,a) in files:
-        graph.nodes.append(model.Node(f, 'Files', idx.index(a), a))
-    graph.nodes.append(model.Node('.', 'Files', idx.index('.'), repository.origin))
+        graph.nodes.append(model.Node(f, 'File', idx.index(a), a))
+    graph.nodes.append(model.Node('.', 'File', idx.index('.'), repository.origin))
     for (n,f,l) in functions:
         graph.links.append(model.Link( idx.index(repository.address_files(f)), idx.index(repository.address_functions(f,n,l)), 1 ))
     for (f,a) in files:
         graph.links.append(model.Link( idx.index(a), idx.index('.'), 1 ))
     #for (c, p) in parents:
     #    graph.links.append(model.Link( idx.index(c), idx.index(p), 2))
+    return graph
+
+def output(repository, file):
+    graph = retrieve(repository)
     #
     # write json
     with open(file+'.json', 'wb+') as out_json:

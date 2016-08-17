@@ -39,10 +39,6 @@ def emptypath(s):
         return os.path.normpath(s)
 
 def retrieve(repository):
-    f = repository.retrieve_files()
-    return f
-
-def output(repository, file):
     files = repository.retrieve_files()
     files.sort()
     paths = [
@@ -70,18 +66,22 @@ def output(repository, file):
     idx = files+children
     #
     graph = model.Graph(
-        model.Project(repository.path, repository.origin, repository.revision),
+        model.Project(repository.origin, repository.commit, repository.owner, repository.name),
         [],[]
     )
     #
     for f in files:
-        graph.nodes.append(model.Node(f, 'Files', idx.index(f), repository.address_files(f)))
+        graph.nodes.append(model.Node(f, 'File', idx.index(f), repository.address_files(f)))
     for m in children:
-        graph.nodes.append(model.Node(m, 'Directories', idx.index(m), repository.address_files(m)))
+        graph.nodes.append(model.Node(m, 'Directory', idx.index(m), repository.address_files(m)))
     for (f, b, m) in paths:
         graph.links.append(model.Link( idx.index(f), idx.index(m), 1 ))
     for (c, p) in parents:
         graph.links.append(model.Link( idx.index(c), idx.index(p), 2))
+    return graph
+
+def output(repository, file):
+    graph = retrieve(repository)
     #
     # write json
     with open(file+'.json', 'wb+') as out_json:

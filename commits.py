@@ -6,23 +6,23 @@ import os
 import itertools
 
 def retrieve(repository):
-    f = repository.retrieve_commits()
-    return f
-
-def output(repository, file):
     (commits, family) = repository.retrieve_commits()
     # commits = {c for (c,p) in family} | {p for (c,p) in family}
     idx = list(commits)
     #
     graph = model.Graph(
-        model.Project(repository.path, repository.origin, repository.revision),
+        model.Project(repository.origin, repository.commit, repository.owner, repository.name),
         [],[]
     )
     #
     for c in commits:
-        graph.nodes.append(model.Node(c, 'Commits', idx.index(c), repository.address_commits(c)))
+        graph.nodes.append(model.Node(c, 'Commit', idx.index(c), repository.address_commits(c)))
     for (c, p) in family:
         graph.links.append(model.Link( idx.index(c), idx.index(p), 1))
+    return graph
+
+def output(repository, file):
+    graph = retrieve(repository)
     #
     # write json
     with open(file+'.json', 'wb+') as out_json:

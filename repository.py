@@ -4,6 +4,7 @@ import model
 import sys
 import collections
 from radon import visitors
+#from pygithub3 import Github
 
 class FunctionsVisitor(visitors.CodeVisitor):
     def __init__(self, file=''):
@@ -25,7 +26,7 @@ class FeaturesVisitor(visitors.CodeVisitor):
         complexity_visitor = visitors.ComplexityVisitor.from_ast(node)
         start_line = node.lineno - 1
         end_line = complexity_visitor.functions[0].endline
-        # vector of features, only complexit for the time being
+        # vector of features, only complexity for the time being
         features = [
             #complexity_visitor.functions[0].complexity,
             complexity_visitor.functions[0].complexity,
@@ -38,23 +39,32 @@ class FeaturesVisitor(visitors.CodeVisitor):
 File = collections.namedtuple('File', ['filename', 'file', 'path'])
 Commit = collections.namedtuple('Commit', [])
 Function = collections.namedtuple('Function', ['functionname', 'file', 'lineno'])
-Feature = collections.namedtuple('Feature', ['functionname', 'file', 'lineno', 'features'])
+Feature = collections.namedtuple('Function', ['functionname', 'file', 'lineno', 'features'])
 
 class Repository:
 
     def __init__(self, path, revision):
         self.path = path
         self.revision = revision
-        # to be calculated
+        # technical
         self.repository = None
+        # model
         self.origin = None
+        self.commit = None
+        self.owner = None
+        self.name = None
 
     def connect(self):
         try:
             if self.repository == None:
                 self.repository = git.Repo(self.path)
                 self.origin = self.repository.remotes.origin.url.replace(".git","")
-                print("SOVA: Connected to <" + self.path + "> originated from <" + self.origin + ">")
+                self.commit = self.repository.commit(self.revision).hexsha
+                b = self.origin.rfind("/")
+                a = self.origin.rfind("/", 0, b)
+                self.owner = self.origin[a+1:b]
+                self.name = self.origin[b+1:]
+                print("SOVA: Connected to <" + self.path + "> originated from <" + self.origin + "> at <" + self.commit + ">")
         except git.exc.NoSuchPathError:
             sys.exit("SOVA: Path does not exist, aborting")
         except:
@@ -109,7 +119,7 @@ class Repository:
             sys.exit("SOVA: Failed to retrieve commits, aborting")
 
     def retrieve_functions(self):
-        #try:
+        try:
             listing = self.repository.git.ls_tree('-r', '--name-only', self.revision).split('\n')
             functions = []
             for f in listing:
@@ -120,13 +130,13 @@ class Repository:
                         #print(v.functionname, v.file, v.lineno)
                         functions.append((v.functionname, v.file, str(v.lineno)))
             return functions
-        #except git.exc.GitCommandError as e:
-        #    sys.exit("SOVA: Failed to execute git command (error {0}), aborting".format(e.status))
-        #except:
-        #    sys.exit("SOVA: Failed to retrieve functions, aborting")
+        except git.exc.GitCommandError as e:
+            sys.exit("SOVA: Failed to execute git command (error {0}), aborting".format(e.status))
+        except:
+            sys.exit("SOVA: Failed to retrieve functions, aborting")
 
     def retrieve_features(self):
-        #try:
+        try:
             listing = self.repository.git.ls_tree('-r', '--name-only', self.revision).split('\n')
             features = []
             for f in listing:
@@ -139,7 +149,7 @@ class Repository:
                         #print(v.functionname, v.file, v.lineno, v.features)
                         features.append((v.functionname, v.file, str(v.lineno), v.features))
             return features
-        #except git.exc.GitCommandError as e:
-        #    sys.exit("SOVA: Failed to execute git command (error {0}), aborting".format(e.status))
-        #except:
-        #    sys.exit("SOVA: Failed to retrieve functions, aborting")
+        except git.exc.GitCommandError as e:
+            sys.exit("SOVA: Failed to execute git command (error {0}), aborting".format(e.status))
+        except:
+            sys.exit("SOVA: Failed to retrieve functions, aborting")

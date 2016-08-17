@@ -6,10 +6,6 @@ import os
 import itertools
 
 def retrieve(repository):
-    f = repository.retrieve_features()
-    return f
-
-def output(repository, file):
     features = repository.retrieve_features()
     names = {
         (n,repository.address_functions(f,n,l),ff[0])
@@ -25,16 +21,16 @@ def output(repository, file):
     #print(idx)
     #
     graph = model.Graph(
-        model.Project(repository.path, repository.origin, repository.revision),
+        model.Project(repository.origin, repository.commit, repository.owner, repository.name),
         [],[]
     )
     #
     for (n,a,c) in names:
-        graph.nodes.append( model.Node(name = n, group = 'Functions', id = idx.index(a), url = a, complexity = 5+float(c)/3) )
+        graph.nodes.append( model.Node(name = n, group = 'Function', id = idx.index(a), url = a, complexity = 5+float(c)/3) )
     for (f,a) in files:
-        graph.nodes.append( model.Node(name = f, group = 'Files', id = idx.index(a), url = a, complexity = 4.0))
+        graph.nodes.append( model.Node(name = f, group = 'File', id = idx.index(a), url = a, complexity = 4.0))
     #
-    graph.nodes.append( model.Node(name = '.', group = 'Files', id = idx.index('.'), url = repository.origin, complexity = 6.0) )
+    graph.nodes.append( model.Node(name = '.', group = 'File', id = idx.index('.'), url = repository.origin, complexity = 6.0) )
     #
     for (n,f,l,ff) in features:
         graph.links.append(model.Link( idx.index(repository.address_files(f)), idx.index(repository.address_functions(f,n,l)), 1 ))
@@ -42,6 +38,10 @@ def output(repository, file):
         graph.links.append(model.Link( idx.index(a), idx.index('.'), 1 ))
     #for (c, p) in parents:
     #    graph.links.append(model.Link( idx.index(c), idx.index(p), 2))
+    return graph
+
+def output(repository, file):
+    graph = retrieve(repository)
     #
     # write json
     with open(file+'.json', 'wb+') as out_json:
@@ -52,4 +52,3 @@ def output(repository, file):
     out_csv.writerow(['name', 'group', 'id', 'url', 'complexity', 'quality'])
     for i in range(len(graph.nodes)):
         out_csv.writerow([graph.nodes[i].name, graph.nodes[i].group, graph.nodes[i].id, graph.nodes[i].url, graph.nodes[i].complexity, graph.nodes[i].quality])
-    #
