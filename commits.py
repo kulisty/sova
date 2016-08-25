@@ -10,19 +10,17 @@ def retrieve(repository):
     # commits = {c for (c,p) in family} | {p for (c,p) in family}
     idx = list(commits)
     #
-    graph = model.Graph(
-        model.Project(repository.origin, repository.commit, repository.owner, repository.name),
-        [],[]
-    )
+    graph = model.Graph([],[])
     #
     for c in commits:
-        graph.nodes.append(model.Node(c, 'Commit', idx.index(c), repository.address_commits(c)))
+        graph.nodes.append(model.Node(c, 'Commit', idx.index(c), repository.address_commits(c), 1))
     for (c, p) in family:
-        graph.links.append(model.Link( idx.index(c), idx.index(p), 1))
+        graph.links.append(model.Link( idx.index(c), idx.index(p), 1, 1))
     return graph
 
 def output(repository, file):
     graph = retrieve(repository)
+    graph.project = model.Project(repository.origin, repository.commit, repository.owner, repository.name)
     #
     # write json
     with open(file+'.json', 'wb+') as out_json:

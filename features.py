@@ -20,28 +20,26 @@ def retrieve(repository):
     idx = ni+nf+['.']
     #print(idx)
     #
-    graph = model.Graph(
-        model.Project(repository.origin, repository.commit, repository.owner, repository.name),
-        [],[]
-    )
+    graph = model.Graph([],[])
     #
     for (n,a,c) in names:
-        graph.nodes.append( model.Node(name = n, group = 'Function', id = idx.index(a), url = a, complexity = 5+float(c)/3) )
+        graph.nodes.append( model.Node(name = n, group = 'Function', id = idx.index(a), url = a, visibility = 2, complexity = 5+float(c)/3) )
     for (f,a) in files:
-        graph.nodes.append( model.Node(name = f, group = 'File', id = idx.index(a), url = a, complexity = 4.0))
+        graph.nodes.append( model.Node(name = f, group = 'File', id = idx.index(a), url = a, visibility = 1, complexity = 4.0))
     #
     graph.nodes.append( model.Node(name = '.', group = 'File', id = idx.index('.'), url = repository.origin, complexity = 6.0) )
     #
     for (n,f,l,ff) in features:
-        graph.links.append(model.Link( idx.index(repository.address_files(f)), idx.index(repository.address_functions(f,n,l)), 1 ))
+        graph.links.append(model.Link(idx.index(repository.address_files(f)), idx.index(repository.address_functions(f,n,l)), 1, visibility = 2))
     for (f,a) in files:
-        graph.links.append(model.Link( idx.index(a), idx.index('.'), 1 ))
+        graph.links.append(model.Link(idx.index(a), idx.index('.'), 1, visibility = 1))
     #for (c, p) in parents:
     #    graph.links.append(model.Link( idx.index(c), idx.index(p), 2))
     return graph
 
 def output(repository, file):
     graph = retrieve(repository)
+    graph.project = model.Project(repository.origin, repository.commit, repository.owner, repository.name)
     #
     # write json
     with open(file+'.json', 'wb+') as out_json:

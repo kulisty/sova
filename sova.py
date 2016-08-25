@@ -3,8 +3,10 @@ import time
 import io
 import os
 import sys
+import collections
 import repository
 import model
+import json
 import files
 import commits
 import functions
@@ -33,10 +35,20 @@ def run():
     # repo = repository.Repository(args.path, args.rev, args.rev_from, args.rev_to)
     repo = repository.Repository(args.path, args.rev)
     repo.connect()
+
     files.output(repo, './data/files')
     commits.output(repo, './data/commits')
     functions.output(repo, './data/functions')
     features.output(repo, './data/features')
+
+    archive = model.Archive(None, None, None, None)
+    archive.project = model.Project(repo.origin, repo.commit, repo.owner, repo.name)
+    archive.commits = commits.retrieve(repo)
+    archive.files = files.retrieve(repo)
+    archive.functions = features.retrieve(repo)
+    with open('./data/'+repo.name+'@'+repo.owner+'#'+repo.commit+'.json', 'wb+') as out_json:
+        json.dump(archive, out_json, default=model.default, indent=2)
+
     sys.exit("SOVA: Software warehouse successfully generated")
 
 if __name__ == '__main__':

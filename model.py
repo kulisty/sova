@@ -16,11 +16,12 @@ class Project(object):
 # Container for information about the project's nodes
 class Node(object):
 
-    def __init__(self, name='', group='', id='', url='', complexity=1.0, quality=1.0):
+    def __init__(self, name='', group='', id='', url='', visibility=1.0, complexity=1.0, quality=1.0):
+        self.id = id
         self.name = name
         self.group = group
-        self.id = id
         self.url = url
+        self.visibility = visibility
         self.complexity = complexity
         self.quality = quality
         # on-screen display - circle
@@ -39,15 +40,16 @@ class Node(object):
         return self.__dict__
 
     def __dir__(self):
-            return ['name', 'group', 'id', 'url', 'complexity', 'quality']
+            return ['name', 'group', 'id', 'url', 'visibility', 'complexity', 'quality']
 
 # Container for information about the project's links (between nodes)
 class Link(object):
 
-    def __init__(self, source='', target='', value='', complexity=1.0, quality=1.0):
+    def __init__(self, source='', target='', value='', visibility=1.0, complexity=1.0, quality=1.0):
         self.source = source
         self.target = target
         self.value = value
+        self.visibility = visibility
         self.complexity = complexity
         self.quality = quality
         # on-screen display - line
@@ -61,18 +63,29 @@ class Link(object):
         return self.__dict__
 
     def __dir__(self):
-            return ['source', 'target', 'value', 'complexity', 'quality']
+            return ['source', 'target', 'value', 'visibility', 'complexity', 'quality']
 
-# Container for information about the project and its nodes and links
+# Container for information about graph of nodes and links
 class Graph(object):
 
     # Note: there were problems with nodes=[], links=[]
     # for some reason two consecutively created graphs
     # were allocated the same collections of nodes and links
-    def __init__(self, project, nodes, links):
-        self.project = project
+    def __init__(self, nodes, links):
         self.nodes = nodes
         self.links = links
+
+    def _asdict(self):
+        return self.__dict__
+
+# Container for information about the project and its layers (subgraphs)
+class Archive(object):
+
+    def __init__(self, project, commits, files, functions):
+        self.project = project
+        self.commits = commits
+        self.files = files
+        self.functions = functions
 
     def _asdict(self):
         return self.__dict__

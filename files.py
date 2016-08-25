@@ -65,23 +65,21 @@ def retrieve(repository):
     ]
     idx = files+children
     #
-    graph = model.Graph(
-        model.Project(repository.origin, repository.commit, repository.owner, repository.name),
-        [],[]
-    )
+    graph = model.Graph([],[])
     #
     for f in files:
-        graph.nodes.append(model.Node(f, 'File', idx.index(f), repository.address_files(f)))
+        graph.nodes.append(model.Node(f, 'File', idx.index(f), repository.address_files(f), 2))
     for m in children:
-        graph.nodes.append(model.Node(m, 'Directory', idx.index(m), repository.address_files(m)))
+        graph.nodes.append(model.Node(m, 'Directory', idx.index(m), repository.address_files(m), 1))
     for (f, b, m) in paths:
-        graph.links.append(model.Link( idx.index(f), idx.index(m), 1 ))
+        graph.links.append(model.Link( idx.index(f), idx.index(m), 1, 2))
     for (c, p) in parents:
-        graph.links.append(model.Link( idx.index(c), idx.index(p), 2))
+        graph.links.append(model.Link( idx.index(c), idx.index(p), 2, 1))
     return graph
 
 def output(repository, file):
     graph = retrieve(repository)
+    graph.project = model.Project(repository.origin, repository.commit, repository.owner, repository.name)
     #
     # write json
     with open(file+'.json', 'wb+') as out_json:
