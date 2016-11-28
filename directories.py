@@ -91,40 +91,22 @@ def retrieve(repository):
         graph.links.append(model.Link( idx.index(c), idx.index(p), 2, 1))
     return graph
 
-def con(bd):
-    res = []
-    for key, value in bd.items():
-        if value == {}:
-            res.append({"name" : key, "size": 1024})
-        else:
-            res.append({"name" : key, "children" : con(value)})
-    return res
-
 def output(repository, file):
-    mag = model.Magnify()
-    #
-    mag.project = model.Project(repository.origin, repository.commit, repository.owner, repository.name)
-    #
-    mag.graph = retrieve(repository)
+    graph = retrieve(repository)
     #
     files = repository.retrieve_files()
+    dirs = {}
+    recurse_setdefault(dirs, files)
     #
-    base_dict = {}
-    dict_add = lambda x, y={}: dict_add(x[:-1], y).setdefault(x[-1], {}) if(x) else y
-    map(lambda x: dict_add(x, base_dict), [path.split("\\") for path in files])
-    #
-    flare_dict = {"name" : repository.name, "children" : con(base_dict)}
-    #
-    #flare_add = lambda x, y: for key, value in x.items() flare_add(x[:-1], y).append("name" : x[-1], "children": {}) if(x) else y
-    #
-    mag.tree = flare_dict
+    graph.project = model.Project(repository.origin, repository.commit, repository.owner, repository.name)
+    graph.tree = dirs
     #
     # write json
     with open(file+'.json', 'wb+') as out_json:
-        json.dump(mag, out_json, default=model.default, indent=2)
+        json.dump(graph, out_json, default=model.default, indent=2)
     #
     # write csv
     out_csv = csv.writer(open(file+'.csv', 'wb+'), delimiter=';')
     out_csv.writerow(['name', 'group', 'id', 'url'])
-    for i in range(len(mag.graph.nodes)):
-        out_csv.writerow([mag.graph.nodes[i].name, mag.graph.nodes[i].group, mag.graph.nodes[i].id, mag.graph.nodes[i].url])
+    for i in range(len(graph.nodes)):
+        out_csv.writerow([graph.nodes[i].name, graph.nodes[i].group, graph.nodes[i].id, graph.nodes[i].url])

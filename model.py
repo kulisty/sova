@@ -13,6 +13,19 @@ class Project(object):
     def __dir__(self):
             return ['origin', 'commit', 'owner', 'name']
 
+# Container for information about the project
+class Tree(object):
+
+    def __init__(self, name='', children=''):
+        self.name = name
+        self.children = children
+
+    def _asdict(self):
+        return self.__dict__
+
+    def __dir__(self):
+            return ['name', 'children']
+
 # Container for information about the project's nodes
 class Node(object):
 
@@ -74,6 +87,20 @@ class Graph(object):
     def __init__(self, nodes, links):
         self.nodes = nodes
         self.links = links
+
+    def _asdict(self):
+        return self.__dict__
+
+# Container for information about project, tree (of files), graph (of many things)
+class Magnify(object):
+
+    # Note: there were problems with nodes=[], links=[]
+    # for some reason two consecutively created graphs
+    # were allocated the same collections of nodes and links
+    def __init__(self):
+        self.project = None
+        self.tree = None
+        self.graph = None
 
     def _asdict(self):
         return self.__dict__

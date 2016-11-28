@@ -4,6 +4,7 @@ import json
 import csv
 import os
 import itertools
+import random
 
 def retrieve(repository):
     (commits, family) = repository.retrieve_commits()
@@ -13,9 +14,9 @@ def retrieve(repository):
     graph = model.Graph([],[])
     #
     for c in commits:
-        graph.nodes.append(model.Node(c, 'Commit', idx.index(c), repository.address_commits(c), 1))
+        graph.nodes.append(model.Node(c, 'Commit', idx.index(c), repository.address_commits(c), visibility = random.uniform(1,3)))
     for (c, p) in family:
-        graph.links.append(model.Link( idx.index(c), idx.index(p), 1, 1))
+        graph.links.append(model.Link( idx.index(c), idx.index(p), 1, visibility = 1))
     return graph
 
 def output(repository, file):
@@ -28,6 +29,6 @@ def output(repository, file):
     #
     # write csv
     out_csv = csv.writer(open(file+'.csv', 'wb+'), delimiter=';')
-    out_csv.writerow(['name', 'group', 'id', 'url'])
+    out_csv.writerow(['name', 'group', 'id', 'url', 'visibility'])
     for i in range(len(graph.nodes)):
-        out_csv.writerow([graph.nodes[i].name, graph.nodes[i].group, graph.nodes[i].id, graph.nodes[i].url])
+        out_csv.writerow([graph.nodes[i].name, graph.nodes[i].group, graph.nodes[i].id, graph.nodes[i].url, graph.nodes[i].visibility])

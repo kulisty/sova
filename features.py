@@ -4,6 +4,7 @@ import json
 import csv
 import os
 import itertools
+import random
 
 def retrieve(repository):
     features = repository.retrieve_features()
