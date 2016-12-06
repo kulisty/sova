@@ -53,7 +53,11 @@ def another_approach():
     map(lambda x: dict_add(x, base_dict), [path.split("/") for path in files])
 
 def retrieve(repository):
-    files = repository.retrieve_files()
+    fs = repository.retrieve_files()
+    files = [
+        f
+        for (f,s) in fs
+    ]
     files.sort()
     paths = [
         (f, os.path.basename(f), emptypath(os.path.dirname(f)))
@@ -82,22 +86,26 @@ def retrieve(repository):
     graph = model.Graph([],[])
     #
     for f in files:
-        graph.nodes.append(model.Node(f, 'File', idx.index(f), repository.address_files(f), 2))
+        graph.nodes.append(model.Node(".\\"+f, 'File', idx.index(f), repository.address_files(f), 2))
     for m in children:
-        graph.nodes.append(model.Node(m, 'Directory', idx.index(m), repository.address_files(m), 1))
+        if m == ".":
+            graph.nodes.append(model.Node(m, 'Directory', idx.index(m), repository.address_files(m), 1))
+        else:
+            graph.nodes.append(model.Node(".\\"+m, 'Directory', idx.index(m), repository.address_files(m), 1))
     for (f, b, m) in paths:
         graph.links.append(model.Link( idx.index(f), idx.index(m), 1, 2))
     for (c, p) in parents:
         graph.links.append(model.Link( idx.index(c), idx.index(p), 2, 1))
     return graph
 
-def con(bd):
+def con(bd, path, ind):
     res = []
     for key, value in bd.items():
         if value == {}:
-            res.append({"name" : key, "size": 1024})
+            #print({"name" : key, "size": ind.get(path + key, 0)})
+            res.append({"name" : key, "size": ind.get(path + key, 0)})
         else:
-            res.append({"name" : key, "children" : con(value)})
+            res.append({"name" : key, "children" : con(value, path  + key + '\\', ind)})
     return res
 
 def output(repository, file):
@@ -107,13 +115,24 @@ def output(repository, file):
     #
     mag.graph = retrieve(repository)
     #
-    files = repository.retrieve_files()
+    filesize = repository.retrieve_files()
+    files = []
+    for (path, size) in filesize:
+        files.append(path.split("\\"))
+    findex = {}
+    for (path, size) in filesize:
+        findex.setdefault(path, size)
     #
-    base_dict = {}
+    # dict_add = lambda x, y={}: dict_add(x[:-1], y).setdefault(x[-1], {}) if(x) else y
+    # base_dict = {}
+    # map(lambda x: dict_add(x, base_dict), [path.split("\\") for (path, size) in files])
+    #
     dict_add = lambda x, y={}: dict_add(x[:-1], y).setdefault(x[-1], {}) if(x) else y
-    map(lambda x: dict_add(x, base_dict), [path.split("\\") for path in files])
+    base_dict = {}
+    map(lambda x: dict_add(x, base_dict), files)
     #
-    flare_dict = {"name" : repository.name, "children" : con(base_dict)}
+    # flare_dict = {"name" : repository.name, "children" : con(base_dict, "", findex)}
+    flare_dict = {"name" : ".", "children" : con(base_dict, "", findex)}
     #
     #flare_add = lambda x, y: for key, value in x.items() flare_add(x[:-1], y).append("name" : x[-1], "children": {}) if(x) else y
     #

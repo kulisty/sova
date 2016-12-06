@@ -1,4 +1,5 @@
 import os
+import re
 import git
 import model
 import sys
@@ -87,11 +88,19 @@ class Repository:
 
     def retrieve_files(self):
         try:
-            listing = self.repository.git.ls_tree('-r', '--name-only', self.revision).split('\n')
-            files = [
-                os.path.normpath(file)
-                for file in listing
-            ]
+            # listing = self.repository.git.ls_tree('-r', '--name-only', self.revision).split('\n')
+            listing = self.repository.git.ls_tree('-r', '-l', self.revision).split('\n')
+            #print(listing)
+            files = []
+            for l in listing:
+                e = l.split()
+                #print(e[0], e[1], e[2], e[3], e[4])
+                files.append((os.path.normpath(e[4]), e[3]))
+            #files = [
+            #    os.path.normpath(file)
+            #    for file in listing
+            #]
+            #print(files)
             return files
         except git.exc.GitCommandError as e:
             sys.exit("SOVA: Failed to execute git command (error {0}), aborting".format(e.status))
