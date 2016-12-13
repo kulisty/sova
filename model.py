@@ -29,14 +29,17 @@ class Tree(object):
 # Container for information about the project's nodes
 class Node(object):
 
-    def __init__(self, name='', group='', id='', url='', visibility=1.0, complexity=1.0, quality=1.0):
+    def __init__(self, name='', group='', id='', url='', visibility=1.0, complexity=1.0, quality=1.0, size=1.0, weight=1.0):
         self.id = id
         self.name = name
         self.group = group
         self.url = url
         self.visibility = visibility
+        # measures
         self.complexity = complexity
         self.quality = quality
+        self.size = size
+        self.weight = weight
         # on-screen display - circle
         self.cx = 0.0
         self.cy = 0.0
@@ -53,7 +56,7 @@ class Node(object):
         return self.__dict__
 
     def __dir__(self):
-            return ['name', 'group', 'id', 'url', 'visibility', 'complexity', 'quality']
+            return ['id', 'name', 'group', 'url', 'visibility', 'complexity', 'quality', 'size', 'weight']
 
 # Container for information about the project's links (between nodes)
 class Link(object):
